@@ -16,14 +16,15 @@ class Planner(ABC):
         return
 
 class Mapper(Planner):
-    def __init__(self,image_path):
+    def __init__(self,image_path, postprocess=False):
         self.image = Image.open(image_path).convert('1')
         self.map = np.transpose(np.array(self.image))
         self.size = np.array(self.image.size)
         self.scale = 1
         self.image_path = image_path
         self._initialized = False
-
+        self.postprocess = postprocess
+        self.goal = None
         self.path = []
         self.graph = {}
 
@@ -36,7 +37,7 @@ class Mapper(Planner):
             return coord
     
     def check_collision(self,p1,p2):
-        return line_grid_collision(p1,p2,self.map)
+        return line_grid_collision(p1,p2,self.map,d=0.2/self.scale)
     
     def get_next(self, position, goal):
         if not self._initialized:
@@ -50,13 +51,14 @@ class Mapper(Planner):
                 return None
         else:
             mid_goal = self.path[0]
-            vec,norm =  vec_norm(coord,mid_goal)
-            if norm < 0.2:
+            vec,norm =  vec_norm(mid_goal,coord)
+            if norm < 0.2 or (len(self.path) > 1 and not
+               self.check_collision(self.path[1],coord)):
                 self.path.pop(0)
                 return (0,0)
         U = vec/norm
         if self.path:
-            U[0] = -U[0]
+            U[1] = -U[1]
         return U
 
     def save_graph_img(self):

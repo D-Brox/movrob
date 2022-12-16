@@ -1,14 +1,10 @@
-from functools import lru_cache as cache
-from itertools import product
 import numpy as np
-from numba import njit, jit
-from numba.np.extensions import cross2d
+from numba import njit, prange
 
+@njit
 def vec_norm(p1,p2):
-    p1 = np.array(p1)
-    p2 = np.array(p2)
-    vec = p1-p2
-    return vec, np.linalg.norm(vec)
+    vec = np.array(p1) - np.array(p2)
+    return vec, np.sqrt((p1[0]-p2[0])**2 + (p1[1]-p2[1])**2)
 
 def manh_dist(p1,p2):
     p1 = np.array(p1)
@@ -59,14 +55,13 @@ def segment_dist(A, B, P):
         return np.linalg.norm(P - B)
     return np.linalg.norm(np.cross(A-B, A-P))/np.linalg.norm(B - A)
 
-
 @njit
 def line_grid_collision(A,B,map,d=0.2):
     x1,x2 = min(int(A[0]),int(B[0])),max(int(A[0]),int(B[0]))
     y1,y2 = min(int(A[1]),int(B[1])),max(int(A[1]),int(B[1]))
 
-    for i in range(x1,x2+1):
-        for j in range(y1,y2+1):
+    for i in prange(x1,x2+1):
+        for j in prange(y1,y2+1):
             if map[i,j]:
                 continue
             corners = [(i-d,j-d),(i+d+1,j-d),(i-d,j+d+1),(i+d+1,j+d+1)]
@@ -89,3 +84,8 @@ def find_closest(p,graph):
             dist = d 
             vert = v
     return vert
+
+@njit
+def check_nan(m):
+    return np.isnan(m).any()
+

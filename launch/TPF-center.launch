@@ -1,0 +1,11 @@
+<?xml version = "1.0"?>
+
+<launch>
+
+<!--Run thestagesimulator-->
+<node pkg = "stage_ros" name = "stageros" type = "stageros" output = "screen" args = "-d $(find movrob)/worlds/TPF.world"></node>
+
+<!--Run the controller node-->
+<node pkg = "movrob" name = "scripts" type = "TPF-center.py" output = "screen" ></node>
+
+</launch>

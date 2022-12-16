@@ -12,13 +12,10 @@ from planners.Planner import Mapper
 
 
 class Astar(Mapper):
-    def __init__(self,image_path, scale = 1,neighborhood=8):
-        super().__init__(image_path)
+    def __init__(self,image_path, scale = 1,neighborhood=8,postprocess=False):
+        super().__init__(image_path,postprocess)
         self.scale = scale
-
-        if neighborhood not in [4,8]:
-            raise ValueError
-        
+        assert neighborhood in [4,8]
         self.neighborhood = neighborhood
 
     def gen_node(self,coord, add=False):
@@ -27,11 +24,9 @@ class Astar(Mapper):
 
     def __call__(self,goal,position):
         self._initialized = False
-        
         rospy.loginfo("Calculating path")
         self._initialized = self.search_path(position,goal)
         rospy.loginfo("Path calculated")
-
         return self
 
     def setup_search(self,position,goal):
@@ -40,7 +35,6 @@ class Astar(Mapper):
         coord = self.pos2coord(position)
         start = self.gen_node(coord)
         self.openlist.insert(start)
-
         self.goal = self.pos2coord(goal)
 
     def search_path(self,position,goal):
@@ -58,19 +52,14 @@ class Astar(Mapper):
         return True
 
     def _get_neighbors(self,coord,add=False):
-        x,y = coord
-        x = int(x)
-        y = int(y)
-        l = max(0, x-1)
-        r = min(self.size[0],x+1)
-        t = max(0, y-1)
-        b = min(self.size[0],y+1)
+        x,y = int(coord[0]),int(coord[1])
+        l,r = max(0, x-1), min(self.size[0],x+1)
+        t,b = max(0, y-1), min(self.size[0],y+1)
         candidates = [(x,t),(x,b),(l,y),(r,y)]
-        candidates = [c for c in set(candidates) if c != (x,y) and self.map[c]]
+        candidates = [c for c in set(candidates) if c != (x,y) and self.map[c]] 
         if self.neighborhood == 8:
             ax1, ax2 = zip(*candidates)
-            ax1 = [i for i in ax1 if x!=i] 
-            ax2 = [j for j in ax2 if y!=j]
+            ax1, ax2 = [i for i in ax1 if x!=i], [j for j in ax2 if y!=j]
             diag = product(ax1,ax2)
             candidates.extend(c for c in diag if self.map[c])
         return candidates
@@ -79,16 +68,12 @@ class Astar(Mapper):
         while self.openlist:
             node = self.openlist.pop() # Best heuristic + cost
             if node.coord == self.goal:
-                #print(self.expanded)
                 return node
             self.visited.add(node.coord)
             child_nodes = node.neighbors # Get children and parent
             child_nodes = [n for n in child_nodes if n not in self.visited]
             self.add2open(node,child_nodes) # Add to list handled in OpenList
         return None
-
-    def heuristic(self, coord) -> float:
-        return vec_norm(coord, self.goal)[1]
 
     def add2open(self, parent:Node, children):
         for coord in children:
@@ -98,7 +83,7 @@ class Astar(Mapper):
                 self.visited.add(coord)
             node_cost = np.sqrt(manh_dist(parent.coord,coord))
             depth = parent.depth + 1
-            heuristic = self.heuristic(coord)
+            heuristic = vec_norm(coord, self.goal)[1]
             real_cost = node_cost+parent.real_cost
             neighbors = self._get_neighbors(coord)
             n = Node(coord,real_cost,heuristic,depth,parent,neighbors)

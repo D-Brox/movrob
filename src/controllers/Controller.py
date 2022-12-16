@@ -9,17 +9,25 @@ from tf.transformations import euler_from_quaternion
 #from src.LidarScanner import LidarScanner
 from controllers.DiferentialRobot import DifferentialRobot
 
-class ControlNode(ABC):
-    def __init__(self,freq=10.0):
-        # Init params
+class Node(ABC):
+    def __init__(self,freq=30.0):
         rospy.init_node('control_node')
-        #self.scanner = LidarScanner('/base_scan')
-        self.pub_vel = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
-        
+                
         # Set time rate
         rospy.Subscriber('/clock', Clock, self.callback_time)
         self.freq = freq
         self.rate = rospy.Rate(self.freq)
+        self.rate.sleep()
+
+    def callback_time(self, data):
+        self.time = data.clock.secs*1e3 + data.clock.nsecs/1e6
+
+
+class ControlNode(Node):
+    def __init__(self,freq=10.0):
+        super().__init__(freq)
+
+        self.pub_vel = rospy.Publisher("/cmd_vel", Twist, queue_size=10)
 
         # Set current goal
         self.goal = None
@@ -68,9 +76,6 @@ class ControlNode(ABC):
     def publish_vel(self):
         self.pub_vel.publish(self.vel)
 
-    def callback_time(self, data):
-        self.time = data.clock.secs*1e3 + data.clock.nsecs/1e6
-    
     ####################
     # Robot controller #
     ####################

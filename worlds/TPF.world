@@ -1,0 +1,351 @@
+define robot_block0 model
+(
+  size [0.015 0.015 0.015]
+  color "blue"
+  gui_nose 0
+  obstacle_return 0
+)
+
+define erratic0 position
+(
+  size [0.005 0.005 0.005]
+  origin [0.000 0.000 0.000 0.000]
+  gui_nose 1
+  drive "diff"
+  robot_block0(pose [0.000 0.000 0.000 0.000])
+  obstacle_return 0
+)
+
+define robot_block1 model
+(
+  size [0.015 0.015 0.015]
+  color "red"
+  gui_nose 0
+  obstacle_return 0
+)
+
+define erratic1 position
+(
+  size [0.005 0.005 0.005]
+  origin [0.000 0.000 0.000 0.000]
+  gui_nose 1
+  drive "diff"
+  robot_block1(pose [0.000 0.000 0.000 0.000])
+  obstacle_return 0
+)
+
+define robot_block2 model
+(
+  size [0.015 0.015 0.015]
+  color "green"
+  gui_nose 0
+  obstacle_return 0
+)
+
+define erratic2 position
+(
+  size [0.005 0.005 0.005]
+  origin [0.000 0.000 0.000 0.000]
+  gui_nose 1
+  drive "diff"
+  robot_block2(pose [0.000 0.000 0.000 0.000])
+  obstacle_return 0
+)
+
+define robot_block3 model
+(
+  size [0.015 0.015 0.015]
+  color "yellow"
+  gui_nose 0
+  obstacle_return 0
+)
+
+define erratic3 position
+(
+  size [0.005 0.005 0.005]
+  origin [0.000 0.000 0.000 0.000]
+  gui_nose 1
+  drive "diff"
+  robot_block3(pose [0.000 0.000 0.000 0.000])
+  obstacle_return 0
+)
+
+define floorplan model(
+  color "gray30"
+  #boundary 1
+  gui_nose 0
+  gui_grid 0
+  gui_outline 0
+  gripper_return 0
+  fiducial_return 0
+)
+
+resolution 0.01
+interval_sim 50
+
+window( 
+  size [ 800 800 ]
+  rotate [ 0.000 0.000 ]
+  scale 200.000
+  show_data 0
+  show_blocks 1
+  show_flags 1
+  show_clock 1
+  show_follow 0
+  show_footprints 1
+  show_grid 1
+  #show_status 1
+  show_trailarrows 0
+  show_trailrise 0
+  show_trailfast 0
+  show_occupancy 0
+  pcam_on 0
+  screenshots 0
+)
+
+floorplan( 
+  name "my_map"
+  bitmap "test_path.png"
+  size [6.000 6.000 1.000]
+  pose [0.000 0.000 0.000 0.000]
+)
+
+erratic0(
+  pose [-0.955 -0.838 0.000 129.400]
+  name "robot_0"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [0.305 0.219 0.000 12.800]
+  name "robot_1"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [0.212 0.330 0.000 88.300]
+  name "robot_2"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [0.481 -0.528 0.000 -82.000]
+  name "robot_3"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [0.303 -0.705 0.000 97.900]
+  name "robot_4"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [0.324 -0.383 0.000 -173.600]
+  name "robot_5"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [0.731 -0.960 0.000 171.100]
+  name "robot_6"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [-0.791 0.169 0.000 -21.000]
+  name "robot_7"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [0.844 -0.233 0.000 62.800]
+  name "robot_8"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [-0.118 -0.617 0.000 -76.800]
+  name "robot_9"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [0.007 0.138 0.000 -117.100]
+  name "robot_10"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [0.879 -0.243 0.000 22.800]
+  name "robot_11"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [-0.850 -0.450 0.000 -112.700]
+  name "robot_12"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [-0.911 0.476 0.000 121.300]
+  name "robot_13"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [-0.838 0.157 0.000 -75.600]
+  name "robot_14"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [0.390 0.495 0.000 -104.300]
+  name "robot_15"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [0.031 0.220 0.000 -172.500]
+  name "robot_16"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [-0.731 0.826 0.000 70.700]
+  name "robot_17"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [0.186 0.405 0.000 -26.700]
+  name "robot_18"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [-0.925 -0.346 0.000 44.600]
+  name "robot_19"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [-0.123 0.158 0.000 49.000]
+  name "robot_20"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [-0.975 -0.344 0.000 -154.700]
+  name "robot_21"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [0.923 0.814 0.000 115.700]
+  name "robot_22"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [0.733 0.557 0.000 -31.800]
+  name "robot_23"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [-0.794 -0.177 0.000 -94.000]
+  name "robot_24"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [0.212 -0.295 0.000 123.800]
+  name "robot_25"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [-0.172 0.757 0.000 49.300]
+  name "robot_26"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [0.456 0.245 0.000 59.400]
+  name "robot_27"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [-0.832 0.931 0.000 -117.800]
+  name "robot_28"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [-0.580 0.955 0.000 141.300]
+  name "robot_29"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [-0.302 -0.086 0.000 -112.100]
+  name "robot_30"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [0.984 0.285 0.000 147.500]
+  name "robot_31"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [-0.214 -0.771 0.000 157.500]
+  name "robot_32"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [-0.508 0.423 0.000 112.100]
+  name "robot_33"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [0.775 0.926 0.000 57.500]
+  name "robot_34"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [-0.379 -0.004 0.000 107.200]
+  name "robot_35"
+  color_rgba [0.500 0.500 0.000 0.800]
+)
+
+erratic0(
+  pose [0.441 -0.830 0.000 -67.800]
+  name "robot_36"
+  color_rgba [0.000 0.000 0.500 0.800]
+)
+
+erratic1(
+  pose [0.327 0.673 0.000 -178.400]
+  name "robot_37"
+  color_rgba [0.500 0.000 0.000 0.800]
+)
+
+erratic2(
+  pose [0.305 0.797 0.000 -77.200]
+  name "robot_38"
+  color_rgba [0.000 0.500 0.000 0.800]
+)
+
+erratic3(
+  pose [0.050 0.190 0.000 5.200]
+  name "robot_39"
+  color_rgba [0.500 0.500 0.000 0.800]
+)

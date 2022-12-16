@@ -41,7 +41,7 @@ class OpenList:
     def insert(self, __n: Node) -> None:
         key = lambda n: n.real_cost + n.heuristic
         
-        if __n.coord in self._dict: # A*, UCS and IDS
+        if __n.coord in self._dict:
             old_idx = self._dict[__n.coord]
             old_node = self._list[old_idx]
             if __n.real_cost < old_node.real_cost:  # Replace if needed
